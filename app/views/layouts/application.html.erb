@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <![endif]-->
+  <title>Online Shopping: Easyshop</title>
+  <!-- BOOTSTRAP CORE STYLE CSS -->
+
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "bootstrap", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "font-awesome", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "style", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "jquery-1.10.2", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "bootstrap", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "custom", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <!-- GOOGLE FONT -->
+  <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+-->
+</head>
+<body class="<%= controller.controller_name %>">
+
+<div class="navbar navbar-inverse navbar-fixed-top" >
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home/index">Easyshop Online</a>
+    </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/store/index">Store <span class="sr-only">(current)</span></a></li>
+        <li><a href="/mappa/index">Dove siamo</a></li>
+        <li><a href="/home/about">About</a></li>
+      </ul>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%if utenti_signed_in? %></li>
+              <li style="color: white">Logged in as <strong><%= current_utenti.email %></strong></li>
+              <li><%= link_to 'Edit profile', edit_utenti_registration_path %></li>
+              <li><%= link_to "Logout", destroy_utenti_session_path, method: :delete %></li>
+              <li><% else %></li>
+              <li><%= link_to "Sign up", new_utenti_registration_path %></li>
+              <li><%= link_to "Login Utente", new_utenti_session_path %></li>
+              <li><%= link_to "Login Admin", login_path %></li>
+              <li><% end %></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+<!--/.NAVBAR END-->
+
+<div id="banner">
+  <%= image_tag("logo.png") %>
+  <%= @page_title || "Easy-Shop!" %>
+</div>
+<!--BANNER LOGO-->
+
+<section id="home" class="head-main-img">
+
+  <div class="container">
+    <div class="row text-center pad-row" >
+      <div class="col-md-12">
+        <h1 style="font-size: 50px">EASYSHOP</h1>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!--/.HEADING END-->
+<div id="columns">
+  <div id="side">
+    <div id="cart">
+      <% if @cart %>
+          <%= hidden_div_if(@cart.line_items.empty?,id: 'cart') do %>
+              <%= render @cart %>
+          <% end %>
+      <% end %>
+
+    </div>
+
+    <% if session[:user_id] %>
+        <ul>
+          <li><%= link_to 'Orders', orders_path %></li>
+          <li><%= link_to 'Products', products_path %></li>
+          <li><%= link_to 'Users', users_path %></li>
+        </ul>
+        <%= button_to 'Logout', logout_path, method: :delete %>
+    <% end %>
+
+  </div>
+
+  <div id="main">
+    <%= yield %>
+  </div>
+</div>
+<!--tabella-->
+
+<!--finetabella-->
+<section>
+
+  <%= yield :others %>
+
+</section>
+<!--/.NOTE END-->
+<section id="clients"  >
+  <%= yield :others2 %>
+</section>
+
+<section id="footer-sec" >
+
+  <div class="container">
+    <div class="row  pad-bottom" >
+      <div class="col-md-4">
+        <h4> <strong>ABOUT THE APP</strong> </h4>
+        <p>
+          Questa applicazione è stata sviluppata per il corso di basi di dati (corso di laurea
+          in ingegneria informatica). AA 2014/2015.
+
+        </p>
+        <a href="/home/about" >read more</a>
+      </div>
+      <div class="col-md-4">
+        <h4>  </h4>
+      </div>
+      <div class="col-md-4">
+        <h4> <strong>DEVELOPERS</strong> </h4>
+        <p>
+          Luca Distefano <br />
+          Andrea Marino  <br />
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--/.FOOTER END-->
+<!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+<!-- CORE JQUERY  -->
+
+</body>
+</html>
+

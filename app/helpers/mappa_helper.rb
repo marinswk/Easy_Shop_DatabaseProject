@@ -1,0 +1,2 @@
+module MappaHelper
+end
